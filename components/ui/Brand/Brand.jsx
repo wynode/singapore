@@ -1,13 +1,16 @@
-import Image from "next/image"
+import Image from "next/image";
 
 const Brand = ({ ...props }) => (
+  <a className="flex items-center">
     <Image
-        src="/mailgo.svg"
-        alt="Mailgo logo"
-        {...props}
-        width={110}
-        height={50}
-        priority
+      src="/logo.svg"
+      alt="Mailgo logo"
+      {...props}
+      width={44}
+      height={44}
+      priority
     />
-)
-export default Brand
+    <span className="text-slate-100 fz-20 text-xl ml-4">星辉</span>
+  </a>
+);
+export default Brand;

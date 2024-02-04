@@ -17,7 +17,7 @@ const Hero = () => (
         }}
       >
         <div>
-          <div className="space-y-5 max-w-3xl mx-auto text-center z-20 relative pt-28 pb-44 sm:pb-48">
+          <div className="space-y-5 max-w-3xl mx-auto text-center z-20 relative pt-36 pb-52">
             <h1
               className="text-4xl bg-clip-text text-transparent bg-gradient-to-r font-extrabold mx-auto sm:text-6xl p-4"
               style={{
@@ -25,18 +25,21 @@ const Hero = () => (
                   "linear-gradient(179.1deg, #FFFFFF 0.77%, rgba(255, 255, 255, 0) 182.09%)",
               }}
             >
-              Manage your email marketing using AI
+              开启您的新加坡留学之旅
             </h1>
             <p className="max-w-xl mx-auto text-gray-300">
-              Gain control of your business's growth with Mailgo's comprehensive
-              marketing, automation, and email marketing platform.
+              星辉提供全程陪护，让我们带您领略世界级教育的魅力
             </p>
-            <div className="flex justify-center font-medium text-sm">
+            <div
+              className="flex justify-center font-medium text-sm"
+              style={{ marginTop: "60px" }}
+            >
               <NavLink
                 href="/#pricing"
                 className="flex items-center text-white bg-purple-600 hover:bg-purple-500 active:bg-purple-700 "
+                style={{ padding: "10px 16px 10px 20px" }}
               >
-                Get Started
+                立即申请
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"

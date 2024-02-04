@@ -3,21 +3,20 @@ import { useEffect, useRef, useState } from "react";
 
 const Gallery = () => {
   return (
-    <section className="w-full px-8 grid grid-cols-1 md:grid-cols-2 items-center gap-8 max-w-6xl mx-auto">
+    <section className="w-full px-8 grid grid-cols-1 md:grid-cols-2 items-center gap-24 max-w-6xl mx-auto">
       <ShuffleGrid />
       <div>
         <span className="block mb-4 text-xs md:text-sm text-indigo-500 font-medium">
-          Better every day
+          更多一些
         </span>
         <h3 className="text-4xl md:text-6xl font-semibold">
-          Let's change it up a bit
+          启程新加坡，发现学习与探索的完美融合
         </h3>
-        <p className="text-base md:text-lg text-slate-700 my-4 md:my-6">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nam nobis in
-          error repellat voluptatibus ad.
+        <p className="text-base md:text-lg text-slate-600 my-4 md:my-6">
+          新加坡游学服务致力于打造一个集教育、文化和冒险于一体的独特体验。在这里，我们不仅仅提供课堂学习，更开辟了一条发现新加坡独特魅力的新路径。我们的定制游学项目让学生们在新加坡这个多元文化的交汇点上，通过亲身体验来学习语言和文化，拓展国际视野，同时激发出对知识的渴望。
         </p>
         <button className="bg-indigo-500 text-white font-medium py-2 px-4 rounded transition-all hover:bg-indigo-600 active:scale-95">
-          Find a class
+          立即申请
         </button>
       </div>
     </section>
