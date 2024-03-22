@@ -1,10 +1,15 @@
+import Link from "next/link";
+
 const Footer = () => {
   return (
     <footer className="mt-20">
       <div className="custom-screen">
         <div className="mt-10 py-8 border-t border-gray-800 items-center justify-between sm:flex">
           <p className="text-gray-400 text-center">
-            © 2024 Copyright. 星辉出入境版权所有
+            © 2024 Copyright. 星辉出入境版权所有  ｜ 
+            <Link href="https://beian.miit.gov.cn/" target="_blank">
+               豫ICP备2024054303号
+            </Link>
           </p>
           <div className="flex items-center justify-center gap-x-6 text-gray-500 mt-6 sm:mt-0">
             {/* <a href="/" target="_blank" aria-label="social media">

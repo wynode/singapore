@@ -3,7 +3,7 @@ import GradientWrapper from "@/components/GradientWrapper";
 import LayoutEffect from "@/components/LayoutEffect";
 import Gallery from "./Gallery";
 
-const Singapore = () => {
+const Singapore = ({ info }) => {
   return (
     <SectionWrapper>
       <div id="studytour" className="custom-screen text-gray-300 pt-28 pb-8">
@@ -18,7 +18,7 @@ const Singapore = () => {
               falseState: "opacity-0 translate-y-12",
             }}
           >
-            <Gallery></Gallery>
+            <Gallery info={info}></Gallery>
           </LayoutEffect>
         </GradientWrapper>
       </div>

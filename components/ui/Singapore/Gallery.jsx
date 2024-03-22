@@ -1,24 +1,78 @@
 import { motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { cn } from "@/lib/utils";
+import { useDisclosure } from "@nextui-org/react";
+import ApplicationDialog from "../ApplicationDialog.jsx";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const Gallery = () => {
+const Gallery = ({ info }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSubmit = (formData) => {
+    setIsLoading(true);
+    fetch("https://api.luminouscn.com/study_abroad_application/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ...formData,
+        current_region: `${formData.province}${formData.city}${formData.district}`,
+      }),
+    })
+      .then((res) => {
+        res.json().then((json) => {
+          if (res.status === 400 || res.status === 401) {
+            toast.error(JSON.stringify(json));
+            return;
+          }
+          if (json) {
+            toast.success("提交申请成功！感谢您的信任！");
+            onClose(false);
+          }
+        });
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+  const singapore = info && info.singapore ? info.singapore[0] : { images: [] };
   return (
     <section className="w-full px-8 grid grid-cols-1 md:grid-cols-2 items-center gap-24 max-w-6xl mx-auto">
       <div>
         <span className="block mb-4 text-xs md:text-sm text-indigo-500 font-medium">
-          更进一步
+          {/* 更多一些 */}
         </span>
         <h3 className="text-4xl md:text-6xl font-semibold">
-          探索新加坡，开启世界级教育之门
+          {/* 启程新加坡，发现学习与探索的完美融合 */}
+          {singapore.title}
         </h3>
         <p className="text-base md:text-lg text-slate-600 my-4 md:my-6">
-          在这个充满活力的城市国家，新加坡留学服务致力于为您铺设一条通往未来的桥梁。我们深知教育的力量以及它在塑造您未来职业道路中的关键作用。因此，我们提供全面的留学咨询，从选校指导到申请流程，从签证协助到住宿安排，我们的专家团队将确保您的留学旅程平稳、无忧。
+          {/* 新加坡游学服务致力于打造一个集教育、文化和冒险于一体的独特体验。在这里，我们不仅仅提供课堂学习，更开辟了一条发现新加坡独特魅力的新路径。我们的定制游学项目让学生们在新加坡这个多元文化的交汇点上，通过亲身体验来学习语言和文化，拓展国际视野，同时激发出对知识的渴望。 */}
+          {singapore.desc}
         </p>
-        <button className="bg-indigo-500 text-white font-medium py-2 px-4 rounded transition-all hover:bg-indigo-600 active:scale-95">
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            console.log("nihao");
+            onOpen();
+          }}
+          className="bg-indigo-500 text-white font-medium py-2 px-4 rounded transition-all hover:bg-indigo-600 active:scale-95"
+        >
           立即申请
         </button>
+
+        <ApplicationDialog
+          isLoading={isLoading}
+          isOpen={isOpen}
+          onOpenChange={onClose}
+          onSubmit={handleSubmit}
+        />
+        <ToastContainer style={{ zIndex: 10000 }} />
       </div>
-      <ShuffleGrid />
+      <ShuffleGrid singapore={singapore} />
     </section>
   );
 };
@@ -40,74 +94,7 @@ const shuffle = (array) => {
   return array;
 };
 
-const squareData = [
-  {
-    id: 1,
-    src: "https://images.unsplash.com/photo-1547347298-4074fc3086f0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80",
-  },
-  {
-    id: 2,
-    src: "https://images.unsplash.com/photo-1510925758641-869d353cecc7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-  },
-  {
-    id: 3,
-    src: "https://images.unsplash.com/photo-1629901925121-8a141c2a42f4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-  },
-  {
-    id: 4,
-    src: "https://images.unsplash.com/photo-1580238053495-b9720401fd45?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-  },
-  {
-    id: 5,
-    src: "https://images.unsplash.com/photo-1569074187119-c87815b476da?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1325&q=80",
-  },
-  {
-    id: 6,
-    src: "https://images.unsplash.com/photo-1556817411-31ae72fa3ea0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80",
-  },
-  {
-    id: 7,
-    src: "https://images.unsplash.com/photo-1599586120429-48281b6f0ece?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80",
-  },
-  {
-    id: 8,
-    src: "https://plus.unsplash.com/premium_photo-1671436824833-91c0741e89c9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80",
-  },
-  {
-    id: 9,
-    src: "https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80",
-  },
-  {
-    id: 10,
-    src: "https://images.unsplash.com/photo-1610768764270-790fbec18178?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-  },
-  {
-    id: 11,
-    src: "https://images.unsplash.com/photo-1507034589631-9433cc6bc453?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=684&q=80",
-  },
-  {
-    id: 12,
-    src: "https://images.unsplash.com/photo-1533107862482-0e6974b06ec4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=882&q=80",
-  },
-  {
-    id: 13,
-    src: "https://images.unsplash.com/photo-1560089000-7433a4ebbd64?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
-  },
-  {
-    id: 14,
-    src: "https://images.unsplash.com/photo-1517466787929-bc90951d0974?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=686&q=80",
-  },
-  {
-    id: 15,
-    src: "https://images.unsplash.com/photo-1606244864456-8bee63fce472?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=681&q=80",
-  },
-  {
-    id: 16,
-    src: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1820&q=80",
-  },
-];
-
-const generateSquares = () => {
+const generateSquares = (squareData) => {
   return shuffle(squareData).map((sq) => (
     <motion.div
       key={sq.id}
@@ -122,24 +109,47 @@ const generateSquares = () => {
   ));
 };
 
-const ShuffleGrid = () => {
+let images = [];
+
+const ShuffleGrid = ({ singapore }) => {
   const timeoutRef = useRef(null);
-  const [squares, setSquares] = useState(generateSquares());
+  const [squares, setSquares] = useState([]);
 
   useEffect(() => {
-    shuffleSquares();
-
+    if (singapore && singapore.images.length) {
+      images = singapore.images.map((item, index) => {
+        return {
+          id: index + 1,
+          src: item,
+        };
+      });
+      shuffleSquares();
+    }
     return () => clearTimeout(timeoutRef.current);
-  }, []);
+  }, [singapore]);
 
   const shuffleSquares = () => {
-    setSquares(generateSquares());
-
+    setSquares(generateSquares(images));
     timeoutRef.current = setTimeout(shuffleSquares, 3000);
   };
 
+  const getClassName = () => {
+    if (singapore.images.length < 5) {
+      return "grid-cols-2 grid-rows-2";
+    }
+    if (singapore.images.length < 10) {
+      return "grid-cols-3 grid-rows-3";
+    }
+    return "grid-cols-4 grid-rows-4";
+  };
+
   return (
-    <div className="grid grid-cols-4 grid-rows-4 h-[450px] gap-1">
+    <div
+      className={cn(
+        "grid grid-cols-4 grid-rows-4 h-[450px] gap-1",
+        getClassName()
+      )}
+    >
       {squares.map((sq) => sq)}
     </div>
   );

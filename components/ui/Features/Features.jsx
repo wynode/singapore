@@ -89,7 +89,7 @@ const Features = () => {
                                             background: "radial-gradient(157.73% 157.73% at 50% -29.9%, rgba(203, 213, 225, 0.16) 0%, rgba(203, 213, 225, 0) 100%)"
                                         }}
                                     >
-                                        <div className="w-12 h-12 flex items-center justify-center bg-gray-700 rounded-lg text-gray-50">
+                                        <div className="w-12 h-12 flex items-center justify-center bg-lime-700 rounded-lg text-gray-50">
                                             {item.icon}
                                         </div>
                                         <h3 className="text-lg text-gray-50 font-semibold">

@@ -1,7 +1,8 @@
 import Image from "next/image";
+import Link from "next/link";
 
 const Brand = ({ ...props }) => (
-  <a className="flex items-center">
+  <Link className="flex items-center" href="/">
     <Image
       src="/logo.svg"
       alt="Mailgo logo"
@@ -11,6 +12,6 @@ const Brand = ({ ...props }) => (
       priority
     />
     <span className="text-slate-100 fz-20 text-xl ml-4">星辉</span>
-  </a>
+  </Link>
 );
 export default Brand;

@@ -2,30 +2,18 @@ import { useAnimate } from "framer-motion";
 import React, { useRef } from "react";
 import { FiMousePointer } from "react-icons/fi";
 
-const Example = () => {
+let images = [
+  "https://www.hover.dev/imgs/active/1.jpg",
+];
+
+const Example = ({ info }) => {
+  if (info && info.singapore) {
+    const images1 = info.singapore[0].images;
+    const images2 = info.tour[0].images;
+    images = images1.concat(images2);
+  }
   return (
-    <MouseImageTrail
-      renderImageBuffer={50}
-      rotationRange={25}
-      images={[
-        "https://www.hover.dev/imgs/active/1.jpg",
-        "https://www.hover.dev/imgs/active/2.jpg",
-        "https://www.hover.dev/imgs/active/3.jpg",
-        "https://www.hover.dev/imgs/active/4.jpg",
-        "https://www.hover.dev/imgs/active/5.jpg",
-        "https://www.hover.dev/imgs/active/6.jpg",
-        "https://www.hover.dev/imgs/active/7.jpg",
-        "https://www.hover.dev/imgs/active/8.jpg",
-        "https://www.hover.dev/imgs/active/9.jpg",
-        "https://www.hover.dev/imgs/active/10.jpg",
-        "https://www.hover.dev/imgs/active/11.jpg",
-        "https://www.hover.dev/imgs/active/12.jpg",
-        "https://www.hover.dev/imgs/active/13.jpg",
-        "https://www.hover.dev/imgs/active/14.jpg",
-        "https://www.hover.dev/imgs/active/15.jpg",
-        "https://www.hover.dev/imgs/active/16.jpg",
-      ]}
-    >
+    <MouseImageTrail renderImageBuffer={50} rotationRange={25} images={images}>
       <section className="grid h-screen w-full place-content-center">
         <p className="flex items-center gap-2 text-3xl font-bold uppercase text-black">
           {/* <FiMousePointer /> */}
@@ -36,7 +24,7 @@ const Example = () => {
   );
 };
 
-export default Example
+export default Example;
 
 const MouseImageTrail = ({
   children,
