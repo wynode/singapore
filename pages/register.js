@@ -56,7 +56,7 @@ export default function Login() {
         <title>注册 - 星辉出入境服务</title>
       </Head>
       <main className="w-full h-screen flex flex-col items-center justify-center px-4">
-        <ToastContainer style={{ zIndex: 10000 }} />
+        {/* <ToastContainer style={{ zIndex: 10000 }} /> */}
         <div className="max-w-sm w-full text-gray-300">
           <div className="text-center">
             {/* <Brand className='' /> */}
@@ -128,7 +128,7 @@ export default function Login() {
               onClick={handleSubmitLogin}
               size="lg"
               style={{ marginTop: "30px" }}
-              className="w-full text-gray-800 bg-lime-100 hover:bg-lime-200 ring-offset-2 focus:ring rounded-lg"
+              className="w-full text-gray-800 bg-gray-100 hover:bg-gray-200 ring-offset-2 focus:ring rounded-lg"
             >
               注 册
             </Button>

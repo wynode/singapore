@@ -15,7 +15,7 @@ const Example = ({ info }) => {
   return (
     <MouseImageTrail renderImageBuffer={50} rotationRange={25} images={images}>
       <section className="grid h-screen w-full place-content-center">
-        <p className="flex items-center gap-2 text-3xl font-bold uppercase text-black">
+        <p className="flex items-center gap-2 text-3xl font-bold uppercase text-gray">
           {/* <FiMousePointer /> */}
           {/* <span>Hover me</span> */}
         </p>

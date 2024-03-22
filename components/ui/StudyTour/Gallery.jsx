@@ -71,7 +71,7 @@ const Gallery = ({ info }) => {
           onOpenChange={onClose}
           onSubmit={handleSubmit}
         />
-        <ToastContainer style={{ zIndex: 10000 }} />
+        {/* <ToastContainer style={{ zIndex: 10000 }} /> */}
       </div>
     </section>
   );

@@ -34,7 +34,9 @@ const Hero = ({ info }) => {
           }
           if (json) {
             toast.success("提交申请成功！感谢您的信任！");
-            onClose(false);
+            setTimeout(() => {
+              onClose(false);
+            }, 100);
           }
         });
       })
@@ -45,7 +47,7 @@ const Hero = ({ info }) => {
   const home = info && info.home ? info.home[0] : { images: [] };
   return (
     <section className="pt-24" id="application">
-      <ToastContainer style={{ zIndex: 10000 }} />
+      {/* <ToastContainer style={{ zIndex: 10000 }} /> */}
       <Singapore info={info}></Singapore>
       <div className="custom-screen">
         <LayoutEffect

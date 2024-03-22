@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import NavHeader from "../NavHeader";
 import NavLink from "../NavLink";
 import { useRouter } from "next/router";
-
+import { ToastContainer, toast } from "react-toastify";
 import { Tooltip, Button } from "@nextui-org/react";
 
 import { Listbox, ListboxItem } from "@nextui-org/react";
@@ -47,7 +47,8 @@ const Navbar = () => {
   }, []);
 
   return (
-    <header className="fixed z-50 bg-lime-900 w-full" style={{ zIndex: 10000 }}>
+    <header className="fixed z-50 bg-gray-900 w-full" style={{ zIndex: 10000 }}>
+      <ToastContainer style={{ zIndex: 10000 }} />
       <div className="custom-screen md:hidden">
         <NavHeader
           menuBtnEl={menuBtnEl}
@@ -58,7 +59,7 @@ const Navbar = () => {
       <nav
         className={`md:text-sm md:static md:block ${
           state
-            ? "bg-lime-900 absolute z-20 top-0 inset-x-0 rounded-b-2xl shadow-xl md:bg-lime-900"
+            ? "bg-gray-900 absolute z-20 top-0 inset-x-0 rounded-b-2xl shadow-xl md:bg-gray-900"
             : "hidden"
         }`}
       >
@@ -109,7 +110,7 @@ const Navbar = () => {
               ) : (
                 <NavLink
                   href="/login"
-                  className="flex items-center justify-center gap-x-1 text-sm text-white font-medium custom-btn-bg border border-gray-500 active:bg-lime-900 md:inline-flex"
+                  className="flex items-center justify-center gap-x-1 text-sm text-white font-medium custom-btn-bg border border-gray-500 active:bg-gray-900 md:inline-flex"
                 >
                   登录
                   <svg
