@@ -1,9 +1,11 @@
 import Head from "next/head";
 import Link from "next/link";
 import { useState } from "react";
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 import { Button, ButtonGroup, Input } from "@nextui-org/react";
 import { ToastContainer, toast } from "react-toastify";
+import { useTheme } from "@/contexts/ThemeContext";
+import { notMobile } from "@/lib/utils";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function Login() {
@@ -13,6 +15,7 @@ export default function Login() {
   const [passwordRepeat, setPasswordRepeat] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const { theme } = useTheme();
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
       handleSubmitLogin();
@@ -36,12 +39,17 @@ export default function Login() {
       .then((res) => {
         res.json().then((json) => {
           if (res.status === 400 || res.status === 401) {
-            toast.error(JSON.stringify(json));
+            if (notMobile()) {
+              toast.error(JSON.stringify(json));
+            }
+
             return;
           }
           if (json) {
-            toast.success("注册成功，请登录");
-            router.push('/login');
+            if (notMobile()) {
+              toast.success("注册成功，请登录");
+            }
+            router.push("/login");
             // window.location.replace("/login");
           }
         });
@@ -55,20 +63,38 @@ export default function Login() {
       <Head>
         <title>注册 - 星辉出入境服务</title>
       </Head>
-      <main className="w-full h-screen flex flex-col items-center justify-center px-4">
+      <main
+        className="w-full h-screen flex flex-col items-center justify-center px-4"
+        style={{
+          background: `url('/images/login_bg.jpg') no-repeat center center fixed`,
+          backgroundSize: "cover",
+          height: "100vh",
+          width: "100vw",
+        }}
+      >
         {/* <ToastContainer style={{ zIndex: 10000 }} /> */}
-        <div className="max-w-sm w-full text-gray-300">
+        <div
+          className={`bg-white max-w-md w-full ${
+            theme === "dark" ? "text-gray-300" : "text-gray-800"
+          }`}
+          style={{
+            padding: "40px",
+            borderRadius: "10px",
+          }}
+        >
           <div className="text-center">
             {/* <Brand className='' /> */}
             <div className="mt-5 space-y-2">
-              <h1 className="text-white text-2xl font-bold sm:text-3xl">
-                注册账号
-              </h1>
+              <h1 className="text-2xl font-bold sm:text-3xl">注册账号</h1>
               <p className="">
                 已经有账号？{" "}
                 <Link
                   href="/login"
-                  className="font-medium text-purple-500 hover:text-purple-600 duration-150"
+                  className={`font-medium  duration-150 ${
+                    theme === "dark"
+                      ? "text-purple-500 hover:text-purple-600"
+                      : "text-gray-800 hover:text-gray-500"
+                  }`}
                 >
                   立即登录
                 </Link>
@@ -83,7 +109,6 @@ export default function Login() {
                 }}
                 size="lg"
                 label="姓名"
-                variant="bordered"
                 placeholder=""
               />
             </div>
@@ -94,7 +119,6 @@ export default function Login() {
                 }}
                 size="lg"
                 label="邮箱/账号"
-                variant="bordered"
                 placeholder=""
               />
             </div>
@@ -106,7 +130,6 @@ export default function Login() {
                 size="lg"
                 type="password"
                 label="密码"
-                variant="bordered"
                 placeholder=""
               />
             </div>
@@ -119,7 +142,6 @@ export default function Login() {
                 size="lg"
                 type="password"
                 label="重复密码"
-                variant="bordered"
                 placeholder=""
               />
             </div>

@@ -1,6 +1,6 @@
 import LayoutEffect from "@/components/LayoutEffect";
 import SectionWrapper from "@/components/SectionWrapper";
-
+import { useTheme } from "@/contexts/ThemeContext";
 // const faqsList = [
 //   {
 //     q: "我们是谁？",
@@ -17,6 +17,7 @@ import SectionWrapper from "@/components/SectionWrapper";
 // ];
 
 const FAQs = ({ info }) => {
+  const { theme } = useTheme();
   const faqsList =
     info && info.intro
       ? info.intro.map((item) => {
@@ -28,9 +29,17 @@ const FAQs = ({ info }) => {
       : [];
   return (
     <SectionWrapper id="faqs">
-      <div className="custom-screen text-gray-300 py-40">
+      <div
+        className={`custom-screen ${
+          theme === "dark" ? "text-gray-300" : "text-gray-800"
+        } py-40`}
+      >
         <div className="max-w-xl text-center xl:mx-auto">
-          <h2 className="text-gray-50 text-3xl font-extrabold sm:text-4xl">
+          <h2
+            className={`text-3xl font-extrabold sm:text-4xl ${
+              theme === "dark" ? "text-gray-50" : "text-gray-800"
+            }`}
+          >
             您想知道的都在这里
           </h2>
           {/* <p className="mt-3">
@@ -48,7 +57,11 @@ const FAQs = ({ info }) => {
             <ul className="space-y-8 gap-12 grid-cols-2 sm:grid sm:space-y-0 lg:grid-cols-3">
               {faqsList.map((item, idx) => (
                 <li key={idx} className="space-y-3">
-                  <summary className="flex items-center justify-between font-semibold text-gray-100">
+                  <summary
+                    className={`flex items-center justify-between font-semibold ${
+                      theme === "dark" ? "text-gray-100" : "text-gray-800"
+                    }`}
+                  >
                     {item.q}
                   </summary>
                   <p

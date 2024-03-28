@@ -1,11 +1,3 @@
-// import CTA from "@/components/ui/CTA";
-import FAQs from "@/components/ui/FAQs";
-// import Features from "@/components/ui/Features";
-// import Pricing from "@/components/ui/Pricing";
-// import Testimonial from "@/components/ui/Testimonial";
-// import VisualFeatures from "@/components/ui/VisualFeatures";
-import Hero from "@/components/ui/Hero";
-import Singapore from "@/components/ui/Singapore";
 import StudyTour from "@/components/ui/StudyTour";
 import { useEffect, useState } from "react";
 import { useTheme } from "@/contexts/ThemeContext";
@@ -52,15 +44,7 @@ export default function Home() {
   }, []);
   return (
     <div className={theme === "dark" ? "bg-gray-900" : "bg-white"}>
-      <Hero info={info} />
-      <Singapore info={info}></Singapore>
       <StudyTour info={info}></StudyTour>
-      {/* <VisualFeatures />
-      <Features />
-      <CTA />
-      <Testimonial />
-      <Pricing /> */}
-      <FAQs info={info} />
     </div>
   );
 }

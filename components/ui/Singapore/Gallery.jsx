@@ -4,12 +4,14 @@ import { cn } from "@/lib/utils";
 import { useDisclosure } from "@nextui-org/react";
 import ApplicationDialog from "../ApplicationDialog.jsx";
 import { ToastContainer, toast } from "react-toastify";
+import { useTheme } from "@/contexts/ThemeContext";
+import { notMobile } from "@/lib/utils";
 import "react-toastify/dist/ReactToastify.css";
 
 const Gallery = ({ info }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isLoading, setIsLoading] = useState(false);
-
+  const { theme } = useTheme();
   const handleSubmit = (formData) => {
     setIsLoading(true);
     fetch("https://api.luminouscn.com/study_abroad_application/", {
@@ -25,11 +27,15 @@ const Gallery = ({ info }) => {
       .then((res) => {
         res.json().then((json) => {
           if (res.status === 400 || res.status === 401) {
-            toast.error(JSON.stringify(json));
+            if (notMobile) {
+              toast.error(JSON.stringify(json));
+            }
             return;
           }
           if (json) {
-            toast.success("提交申请成功！感谢您的信任！");
+            if (notMobile) {
+              toast.success("提交申请成功！感谢您的信任！");
+            }
             onClose(false);
           }
         });
@@ -45,11 +51,19 @@ const Gallery = ({ info }) => {
         <span className="block mb-4 text-xs md:text-sm text-indigo-500 font-medium">
           {/* 更多一些 */}
         </span>
-        <h3 className="text-4xl md:text-6xl font-semibold">
+        <h3
+          className={`text-4xl md:text-6xl font-semibold ${
+            theme === "dark" ? "text-gray-300" : "text-gray-800"
+          }`}
+        >
           {/* 启程新加坡，发现学习与探索的完美融合 */}
           {singapore.title}
         </h3>
-        <p className="text-base md:text-lg text-slate-600 my-4 md:my-6">
+        <p
+          className={`text-base md:text-lg  my-4 md:my-6 ${
+            theme === "dark" ? "text-slate-600" : "text-gray-800"
+          }`}
+        >
           {/* 新加坡游学服务致力于打造一个集教育、文化和冒险于一体的独特体验。在这里，我们不仅仅提供课堂学习，更开辟了一条发现新加坡独特魅力的新路径。我们的定制游学项目让学生们在新加坡这个多元文化的交汇点上，通过亲身体验来学习语言和文化，拓展国际视野，同时激发出对知识的渴望。 */}
           {singapore.desc}
         </p>
@@ -59,7 +73,11 @@ const Gallery = ({ info }) => {
             console.log("nihao");
             onOpen();
           }}
-          className="bg-indigo-500 text-white font-medium py-2 px-4 rounded transition-all hover:bg-indigo-600 active:scale-95"
+          className={` text-white font-medium py-2 px-4 rounded transition-all  active:scale-95 ${
+            theme === "dark"
+              ? "bg-indigo-500 hover:bg-indigo-600"
+              : "bg-gray-700 hover:bg-gray-600"
+          }`}
         >
           立即申请
         </button>

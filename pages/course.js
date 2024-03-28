@@ -26,6 +26,7 @@ import {
 } from "@nextui-org/react";
 
 import { useEffect, useState, useRef } from "react";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const videoProgressOptions = [
   { value: "0", label: "未学习" },
@@ -41,6 +42,7 @@ export default function VideoList() {
   });
   const router = useRouter();
   const [page, setPage] = useState("1");
+  const { theme } = useTheme();
   const [isLoading, setIsLoading] = useState(false);
   const [courseName, setCourseName] = useState("");
   const [videoList, setVideoList] = useState([]);
@@ -162,6 +164,7 @@ export default function VideoList() {
               ))}
             </Select> */}
             <Select
+              color={theme === "light" ? "" : ""}
               aria-label="学习进度"
               placeholder="选择学习进度"
               className="max-w-xs"
@@ -174,24 +177,21 @@ export default function VideoList() {
               ))}
             </Select>
             <Input
+              color={theme === "light" ? "" : ""}
               onChange={(e) => {
                 setCourseName(e.target.value);
               }}
               variant="underlined"
               // label="课程名称"
+              className="placeholder-white"
               placeholder="输入课程名称"
             />
-            <Button
-              onClick={handleSearch}
-              isLoading={isLoading}
-              radius="full"
-              className="bg-gradient-to-tr from-stone-400 to-slate-500 text-white shadow-lg"
-            >
+            {/* <Button onClick={handleSearch} isLoading={isLoading} radius="full">
               查询
-            </Button>
+            </Button> */}
           </div>
           {isLoading ? (
-            <div className="w-full h-60 flex justify-center items-center">
+            <div className="w-full h-60 flex justify-center items-center min-h-[988px]">
               <CircularProgress
                 size="lg"
                 color="secondary"
@@ -203,6 +203,7 @@ export default function VideoList() {
               {videoList.map((item, index) => (
                 <Card
                   shadow="sm"
+                  className="p-3"
                   key={index}
                   isPressable
                   onPress={() => {
@@ -214,7 +215,7 @@ export default function VideoList() {
                     onOpen();
                   }}
                 >
-                  <CardBody className="overflow-visible p-0">
+                  <CardBody className="overflow-visible">
                     <Image
                       shadow="sm"
                       radius="lg"
@@ -251,13 +252,7 @@ export default function VideoList() {
               onChange={(newPage) => {
                 setPage(newPage);
               }}
-              classNames={{
-                wrapper:
-                  "gap-0 overflow-visible h-8 rounded border border-divider",
-                item: "w-8 h-8 text-small rounded-none bg-transparent",
-                cursor:
-                  "bg-gradient-to-b shadow-lg from-default-500 to-default-800 dark:from-default-300 dark:to-default-100 text-white font-bold",
-              }}
+              color={theme === "light" ? "" : ""}
             />
           ) : (
             ""

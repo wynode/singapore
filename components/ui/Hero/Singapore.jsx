@@ -1,10 +1,9 @@
 import { useAnimate } from "framer-motion";
 import React, { useRef } from "react";
 import { FiMousePointer } from "react-icons/fi";
+import { useTheme } from "@/contexts/ThemeContext";
 
-let images = [
-  "https://www.hover.dev/imgs/active/1.jpg",
-];
+let images = ["https://www.hover.dev/imgs/active/1.jpg"];
 
 const Example = ({ info }) => {
   if (info && info.singapore) {
@@ -112,6 +111,8 @@ const MouseImageTrail = ({
     imageRenderCount.current = imageRenderCount.current + 1;
   };
 
+  const { theme } = useTheme();
+
   return (
     <div
       ref={scope}
@@ -122,7 +123,11 @@ const MouseImageTrail = ({
 
       {images.map((img, index) => (
         <img
-          className="pointer-events-none absolute left-0 top-0 h-48 w-auto rounded-xl border-2 border-gray-900 bg-neutral-900 object-cover opacity-0"
+          className={`pointer-events-none absolute left-0 top-0 h-48 w-auto rounded-xl border-2 ${
+            theme === "dark"
+              ? "border-gray-900 bg-neutral-900"
+              : "border-white bg-white"
+          } object-cover opacity-0`}
           src={img}
           alt={`Mouse move image ${index}`}
           key={index}

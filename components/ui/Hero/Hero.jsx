@@ -9,10 +9,13 @@ import ApplicationDialog from "../ApplicationDialog.jsx";
 import { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useTheme } from "@/contexts/ThemeContext";
+import { notMobile } from "@/lib/utils";
 
 const Hero = ({ info }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isLoading, setIsLoading] = useState(false);
+  const { theme } = useTheme();
 
   const handleSubmit = (formData) => {
     setIsLoading(true);
@@ -29,11 +32,17 @@ const Hero = ({ info }) => {
       .then((res) => {
         res.json().then((json) => {
           if (res.status === 400 || res.status === 401) {
-            toast.error(JSON.stringify(json));
+            if (notMobile()) {
+              toast.error(JSON.stringify(json));
+            }
+
             return;
           }
           if (json) {
-            toast.success("提交申请成功！感谢您的信任！");
+            if (notMobile()) {
+              toast.success("提交申请成功！感谢您的信任！");
+            }
+
             setTimeout(() => {
               onClose(false);
             }, 100);
@@ -63,13 +72,19 @@ const Hero = ({ info }) => {
                 className="text-4xl bg-clip-text text-transparent bg-gradient-to-r font-extrabold mx-auto sm:text-6xl p-4"
                 style={{
                   backgroundImage:
-                    "linear-gradient(179.1deg, #FFFFFF 0.77%, rgba(255, 255, 255, 0) 182.09%)",
+                    theme === "dark"
+                      ? "linear-gradient(179.1deg, #FFFFFF 0.77%, rgba(255, 255, 255, 0) 182.09%)"
+                      : "linear-gradient(179.1deg, #000, rgba(0, 0, 0, 20%) 182.09%)",
                 }}
               >
                 {/* 开启您的新加坡留学之旅 */}
                 {home.title}
               </h1>
-              <p className="max-w-xl mx-auto text-gray-300">
+              <p
+                className={`max-w-xl mx-auto ${
+                  theme === "dark" ? "text-gray-300" : "text-gray-800"
+                }`}
+              >
                 {/* 星辉提供全程陪护，让我们带您领略世界级教育的魅力 */}
                 {home.desc}
               </p>
@@ -84,7 +99,11 @@ const Hero = ({ info }) => {
                     onOpen();
                   }}
                   href="/#application"
-                  className="flex items-center text-white bg-purple-600 hover:bg-purple-500 active:bg-purple-700 "
+                  className={`flex items-center text-white ${
+                    theme === "dark"
+                      ? "bg-purple-600 hover:bg-purple-500 active:bg-purple-700"
+                      : "bg-gray-700 hover:bg-gray-600 active:bg-gray-600"
+                  }`}
                   style={{ padding: "10px 16px 10px 20px" }}
                 >
                   立即申请

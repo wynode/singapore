@@ -82,15 +82,27 @@
 .custom-btn-bg {
   background: radial-gradient(
     67.5% 67.5% at 50% 50%,
-    #4b5563 0%,
-    rgba(75, 85, 99, 0) 100%
+    rgba(55, 65, 81, 70%),
+    rgba(55, 65, 81, 100%)
   );
 }
 
 .custom-btn-bg:hover {
   background: radial-gradient(
     118.75% 118.75% at 50% 50%,
-    #4b5563 0%,
-    rgba(75, 85, 99, 0) 100%
+    rgba(55, 65, 81, 60%),
+    rgba(55, 65, 81, 80%)
   );
+}
+
+.light main {
+  background-color: #fff;
+}
+
+.dark main {
+  background-color: rgb(17, 24, 39);
+}
+
+.placeholder-green-500 input::placeholder {
+  color: #e4e4e7;
 }

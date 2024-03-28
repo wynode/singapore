@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 // import Brand from "@/components/ui/Brand";
 // import Button from "@/components/ui/Button";
 // import Input from "@/components/ui/Input";
@@ -8,7 +8,9 @@ import { useRouter } from 'next/router';
 import { Button, Input } from "@nextui-org/react";
 // import {} from "@nextui-org/react";
 import { useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
+import { useTheme } from "@/contexts/ThemeContext";
+import { notMobile } from "@/lib/utils";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function Login() {
@@ -16,6 +18,7 @@ export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const { theme } = useTheme();
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
       // 回车键被按下
@@ -36,11 +39,15 @@ export default function Login() {
       });
       const json = await res.json();
       if (res.status === 400 || res.status === 401) {
-        toast.error(JSON.stringify(json));
+        if (notMobile()) {
+          toast.error(JSON.stringify(json));
+        }
         return;
       }
       if (json && json.access) {
-        toast.success("登录成功");
+        // if (notMobile()) {
+        //   toast.success("登录成功");
+        // }
         localStorage.setItem("access", json.access);
         const user = await fetch("https://api.luminouscn.com/student/self/", {
           method: "GET", // *GET, POST, PUT, DELETE, etc.
@@ -51,8 +58,8 @@ export default function Login() {
         });
         const userJson = await user.json();
         localStorage.setItem("username", userJson.name);
-        localStorage.setItem('student_id', userJson.student_id);
-        router.push('/course');
+        localStorage.setItem("student_id", userJson.student_id);
+        router.push("/course");
       }
     } finally {
       setIsLoading(false);
@@ -63,20 +70,38 @@ export default function Login() {
       <Head>
         <title>登录 - 星辉出入境服务</title>
       </Head>
-      <main className="w-full h-screen flex flex-col items-center justify-center px-4">
+      <main
+        className="w-full h-screen flex flex-col items-center justify-center px-4"
+        style={{
+          background: `url('/images/login_bg.jpg') no-repeat center center fixed`,
+          backgroundSize: "cover",
+          height: "100vh",
+          width: "100vw",
+        }}
+      >
         {/* <ToastContainer style={{ zIndex: 10000 }} /> */}
-        <div className="max-w-sm w-full text-gray-300">
+        <div
+          className={`bg-white max-w-md w-full ${
+            theme === "dark" ? "text-gray-300" : "text-gray-800"
+          }`}
+          style={{
+            padding: "40px",
+            borderRadius: "10px",
+          }}
+        >
           <div className="text-center">
             {/* <Brand className='' /> */}
             <div className="mt-5 space-y-2">
-              <h1 className="text-white text-2xl font-bold sm:text-3xl">
-                使用账号登录
-              </h1>
+              <h1 className=" text-2xl font-bold sm:text-3xl">使用账号登录</h1>
               <p className="">
                 没有账号？{" "}
                 <Link
                   href="/register"
-                  className="font-medium text-purple-500 hover:text-purple-600 duration-150"
+                  className={`font-medium  duration-150 ${
+                    theme === "dark"
+                      ? "text-purple-500 hover:text-purple-600"
+                      : "text-gray-800 hover:text-gray-500"
+                  }`}
                 >
                   立即注册
                 </Link>
@@ -98,7 +123,6 @@ export default function Login() {
                 size="lg"
                 type="email"
                 label="邮箱/账号"
-                variant="bordered"
                 placeholder=""
               />
             </div>
@@ -117,7 +141,6 @@ export default function Login() {
                 size="lg"
                 type="password"
                 label="密码"
-                variant="bordered"
                 placeholder=""
               />
             </div>

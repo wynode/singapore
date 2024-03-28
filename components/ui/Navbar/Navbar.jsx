@@ -3,25 +3,53 @@ import { useEffect, useRef, useState } from "react";
 import NavHeader from "../NavHeader";
 import NavLink from "../NavLink";
 import { useRouter } from "next/router";
-import { ToastContainer, toast } from "react-toastify";
 import { Tooltip, Button } from "@nextui-org/react";
+import { Switch, VisuallyHidden, useSwitch } from "@nextui-org/react";
+import { MoonIcon } from "./MoonIcon";
+import { SunIcon } from "./SunIcon";
+import { useTheme } from "../../../contexts/ThemeContext";
+import { cn } from "@/lib/utils";
 
 import { Listbox, ListboxItem } from "@nextui-org/react";
 
-const Navbar = () => {
+const Navbar = ({ isCourse }) => {
   const [state, setState] = useState(false);
   const router = useRouter();
   const menuBtnEl = useRef();
+  const { theme, setTheme } = useTheme();
+  const isDarkMode = theme === "dark"; // 判断当前主题是否为深色
+  console.log(isDarkMode);
+  // 自定义开关属性
+  const switchProps = {
+    isSelected: isDarkMode,
+    checked: isDarkMode, // 将当前主题状态传递给开关
+    onChange: () => setTheme(isDarkMode ? "light" : "dark"), // 当开关改变时切换主题
+  };
+
+  const {
+    Component,
+    slots,
+    isSelected,
+    getBaseProps,
+    getInputProps,
+    getWrapperProps,
+  } = useSwitch(switchProps);
+
+  console.log(isSelected, "xxx");
 
   const [name, setName] = useState("");
 
   const [navigation, setNavigation] = useState([
-    { name: "留学申请", href: "/#application" },
-    { name: "新加坡服务", href: "/#singapore" },
-    { name: "游学服务", href: "/#studytour" },
-    { name: "公司简介", href: "/#faqs" },
+    { name: "留学申请", href: "/application" },
+    { name: "新加坡服务", href: "/singapore" },
+    { name: "游学服务", href: "/studytour" },
+    { name: "公司简介", href: "/faqs" },
     { name: "课程学习", href: "/course" },
   ]);
+
+  // useEffect(() => {
+  //   setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
+  // }, [isSelected]);
 
   useEffect(() => {
     document.onclick = (e) => {
@@ -47,8 +75,13 @@ const Navbar = () => {
   }, []);
 
   return (
-    <header className="fixed z-50 bg-gray-900 w-full" style={{ zIndex: 10000 }}>
-      <ToastContainer style={{ zIndex: 10000 }} />
+    <header
+      className={cn(
+        "fixed z-40  w-full",
+        isSelected ? "bg-gray-900" : "bg-white"
+      )}
+      style={{ zIndex: 10000 }}
+    >
       <div className="custom-screen md:hidden">
         <NavHeader
           menuBtnEl={menuBtnEl}
@@ -57,30 +90,62 @@ const Navbar = () => {
         />
       </div>
       <nav
-        className={`md:text-sm md:static md:block ${
+        className={`md:text-sm md:static md:block 
+        ${theme === "dark" ? "bg-gray-900" : "bg-white"}
+        ${
           state
-            ? "bg-gray-900 absolute z-20 top-0 inset-x-0 rounded-b-2xl shadow-xl md:bg-gray-900"
+            ? "absolute z-40 top-0 inset-x-0 rounded-b-2xl shadow-xl"
             : "hidden"
         }`}
       >
         <div className="custom-screen items-center md:flex">
           <NavHeader state={state} onClick={() => setState(!state)} />
           <div
-            className={`flex-1 items-center mt-8 text-gray-300 md:font-medium md:mt-0 md:flex ${
-              state ? "block" : "hidden"
-            } `}
+            className={`flex-1 items-center mt-8 ${
+              isSelected ? "text-gray-300" : "text-gray-800"
+            } md:font-medium md:mt-0 md:flex ${state ? "block" : "hidden"} `}
           >
-            <ul className="flex-1 justify-center items-center space-y-6 md:flex md:space-x-6 md:space-y-0">
-              {navigation.map((item, idx) => {
-                return (
-                  <li key={idx} className="hover:text-gray-50">
-                    <Link href={item.href} className="block">
-                      {item.name}
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
+            {isCourse ? (
+              <ul className="flex-1 justify-center items-center space-y-6 md:flex md:space-x-6 md:space-y-0">
+                {" "}
+              </ul>
+            ) : (
+              <ul className="flex-1 justify-center items-center space-y-6 md:flex md:space-x-6 md:space-y-0">
+                {navigation.map((item, idx) => {
+                  return (
+                    <li
+                      key={idx}
+                      className={`${
+                        isSelected
+                          ? "hover:text-gray-50"
+                          : "hover:text-gray-700"
+                      }`}
+                    >
+                      <Link
+                        href={item.href}
+                        target="_blank"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          if (item.href.includes("course")) {
+                            const url = item.href;
+                            const windowName = "NewWindow";
+                            const windowFeatures = "popup";
+
+                            window.open(url, windowName, windowFeatures);
+                            // window.open(item.href);
+                          } else {
+                            window.open(item.href);
+                          }
+                        }}
+                        className="block"
+                      >
+                        {item.name}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
             <div className="gap-x-6 items-center justify-end mt-6 space-y-6 md:flex md:space-y-0 md:mt-0">
               {/* <Link href="/login" className="block hover:text-gray-50">
                                 Sign in
@@ -108,25 +173,30 @@ const Navbar = () => {
                   <span className="cursor-pointer">{name}</span>
                 </Tooltip>
               ) : (
-                <NavLink
-                  href="/login"
-                  className="flex items-center justify-center gap-x-1 text-sm text-white font-medium custom-btn-bg border border-gray-500 active:bg-gray-900 md:inline-flex"
-                >
-                  登录
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    className="w-5 h-5"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </NavLink>
+                <span></span>
               )}
+              <div className="flex flex-col gap-2 text-gray-700">
+                <Component {...getBaseProps()}>
+                  <VisuallyHidden>
+                    <input {...getInputProps()} />
+                  </VisuallyHidden>
+                  <div
+                    {...getWrapperProps()}
+                    className={slots.wrapper({
+                      class: [
+                        "w-8 h-8",
+                        "flex items-center justify-center",
+                        "rounded-lg bg-default-100 hover:bg-default-200",
+                      ],
+                    })}
+                  >
+                    {isSelected ? <SunIcon /> : <MoonIcon />}
+                  </div>
+                </Component>
+                {/* <p className="text-default-500 select-none">
+                  Lights: {isSelected ? "on" : "off"}
+                </p> */}
+              </div>
             </div>
           </div>
         </div>
