@@ -19,7 +19,7 @@ const Brand = ({ ...props }) => {
           theme === "dark" ? "text-white" : "text-black"
         } fz-20 text-xl ml-4`}
       >
-        星辉
+        新光
       </span>
     </Link>
   );

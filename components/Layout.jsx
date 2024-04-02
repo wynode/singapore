@@ -30,7 +30,7 @@ const Layout = ({ children }) => {
   return (
     <>
       <Head>
-        <title>星辉出入境服务</title>
+        <title>新光出入境服务</title>
         <meta
           name="description"
           content="Gain control of your business's growth with Mailgo's comprehensive marketing, automation, and email marketing platform."

@@ -61,7 +61,7 @@ export default function Login() {
   return (
     <>
       <Head>
-        <title>注册 - 星辉出入境服务</title>
+        <title>注册 - 新光出入境服务</title>
       </Head>
       <main
         className="w-full h-screen flex flex-col items-center justify-center px-4"
@@ -109,7 +109,7 @@ export default function Login() {
                 }}
                 size="lg"
                 label="姓名"
-                placeholder=""
+                placeholder="请使用护照名字"
               />
             </div>
             <div>
@@ -118,7 +118,7 @@ export default function Login() {
                   setUsername(e.target.value);
                 }}
                 size="lg"
-                label="邮箱/账号"
+                label="邮箱"
                 placeholder=""
               />
             </div>

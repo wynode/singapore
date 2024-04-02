@@ -68,7 +68,7 @@ export default function Login() {
   return (
     <>
       <Head>
-        <title>登录 - 星辉出入境服务</title>
+        <title>登录 - 新光出入境服务</title>
       </Head>
       <main
         className="w-full h-screen flex flex-col items-center justify-center px-4"

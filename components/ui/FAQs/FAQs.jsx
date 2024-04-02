@@ -1,18 +1,19 @@
 import LayoutEffect from "@/components/LayoutEffect";
 import SectionWrapper from "@/components/SectionWrapper";
 import { useTheme } from "@/contexts/ThemeContext";
+import Image from "next/image";
 // const faqsList = [
 //   {
 //     q: "我们是谁？",
-//     a: "星辉出入境服务（河南）有限公司是一家小微企业，该公司成立于2023年09月11日，位于河南自贸试验区郑州片区（郑东）祥盛街39号祥盛小区2号楼2单元12层108号，目前处于开业状态，经营范围包括一般项目：因私出入境中介服务；会议及展览服务；组织文化艺术交流活动；票务代理服务；旅客票务代理等。",
+//     a: "新光出入境服务（河南）有限公司是一家小微企业，该公司成立于2023年09月11日，位于河南自贸试验区郑州片区（郑东）祥盛街39号祥盛小区2号楼2单元12层108号，目前处于开业状态，经营范围包括一般项目：因私出入境中介服务；会议及展览服务；组织文化艺术交流活动；票务代理服务；旅客票务代理等。",
 //   },
 //   {
 //     q: "我们的实力怎么样",
-//     a: "综合全网数据暂时还未掌握到星辉出入境服务（河南）有限公司拥有知识产权信息，推测该企业在一般项目：因私出入境中介服务；会议及展览服务；组织文化艺术交流活动等方面还有很大的创新能力提升空间。",
+//     a: "综合全网数据暂时还未掌握到新光出入境服务（河南）有限公司拥有知识产权信息，推测该企业在一般项目：因私出入境中介服务；会议及展览服务；组织文化艺术交流活动等方面还有很大的创新能力提升空间。",
 //   },
 //   {
 //     q: "我们有多少人?",
-//     a: "星辉出入境服务（河南）有限公司法定代表人为康迎伟，康迎伟担任财务负责人，执行董事兼总经理，姚家乐担任监事。",
+//     a: "新光出入境服务（河南）有限公司法定代表人为康迎伟，康迎伟担任财务负责人，执行董事兼总经理，姚家乐担任监事。",
 //   },
 // ];
 
@@ -24,6 +25,7 @@ const FAQs = ({ info }) => {
           return {
             q: item.title,
             a: item.desc,
+            images: item.images,
           };
         })
       : [];
@@ -54,7 +56,12 @@ const FAQs = ({ info }) => {
               falseState: "opacity-0 translate-y-12",
             }}
           >
-            <ul className="space-y-8 gap-12 grid-cols-2 sm:grid sm:space-y-0 lg:grid-cols-3">
+            <ul
+              className="space-y-8 gap-12 grid-cols-2 sm:grid sm:space-y-0 lg:grid-cols-3"
+              style={{
+                gridTemplateColumns: "repeat(auto-fit, minmax(33.33%, 1fr))",
+              }}
+            >
               {faqsList.map((item, idx) => (
                 <li key={idx} className="space-y-3">
                   <summary
@@ -68,6 +75,17 @@ const FAQs = ({ info }) => {
                     dangerouslySetInnerHTML={{ __html: item.a }}
                     className="leading-relaxed"
                   ></p>
+                  {item.images[0] ? (
+                    <Image
+                      width={200}
+                      height={200}
+                      src={item.images[0]}
+                      className="w-full max-w-[600px] mx-auto"
+                      alt="Background pattern"
+                    />
+                  ) : (
+                    ""
+                  )}
                 </li>
               ))}
             </ul>

@@ -16,7 +16,7 @@ const Footer = () => {
           }`}
         >
           <p className={`text-center ${theme === "dark" ? "" : " "}`}>
-            © 2024 Copyright. 星辉出入境版权所有 ｜
+            © 2024 Copyright. 新光出入境版权所有 ｜
             <Link href="https://beian.miit.gov.cn/" target="_blank">
               豫ICP备2024054303号
             </Link>

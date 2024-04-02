@@ -146,7 +146,7 @@ export default function VideoList() {
   return (
     <>
       <Head>
-        <title>视频学习 - 星辉出入境服务</title>
+        <title>视频学习 - 新光出入境服务</title>
       </Head>
       <main className="w-full min-h-[calc(100vh-170px)] flex flex-col items-center px-4 pt-28">
         <div className="max-w-7xl w-full text-gray-300">
