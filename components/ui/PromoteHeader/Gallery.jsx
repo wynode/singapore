@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { useDisclosure } from "@nextui-org/react";
 import ApplicationDialog from "../ApplicationDialog.jsx";
@@ -33,7 +33,7 @@ const Gallery = ({ info }) => {
             return;
           }
           if (json) {
-            if (notMobile) {
+            if (notMobile()) {
               toast.success("提交申请成功！感谢您的信任！");
             }
             onClose(false);
@@ -44,9 +44,11 @@ const Gallery = ({ info }) => {
         setIsLoading(false);
       });
   };
-  const singapore = info && info.singapore ? info.singapore[0] : { images: [] };
+  const tour = info && info.promoteHeader ? info.promoteHeader[0] : { images: [] };
   return (
     <section className="w-full px-8 grid grid-cols-1 md:grid-cols-2 items-center gap-24 max-w-6xl mx-auto">
+      <ShuffleGrid tour={tour} />
+
       <div>
         <span className="block mb-4 text-xs md:text-sm text-indigo-500 font-medium">
           {/* 更多一些 */}
@@ -57,7 +59,7 @@ const Gallery = ({ info }) => {
           }`}
         >
           {/* 启程新加坡，发现学习与探索的完美融合 */}
-          {singapore.title}
+          {tour.title}
         </h3>
         <p
           className={`text-base md:text-lg  my-4 md:my-6 ${
@@ -65,7 +67,7 @@ const Gallery = ({ info }) => {
           }`}
         >
           {/* 新加坡游学服务致力于打造一个集教育、文化和冒险于一体的独特体验。在这里，我们不仅仅提供课堂学习，更开辟了一条发现新加坡独特魅力的新路径。我们的定制游学项目让学生们在新加坡这个多元文化的交汇点上，通过亲身体验来学习语言和文化，拓展国际视野，同时激发出对知识的渴望。 */}
-          {singapore.desc}
+          {tour.desc}
         </p>
         <button
           onClick={(e) => {
@@ -81,7 +83,6 @@ const Gallery = ({ info }) => {
         >
           立即申请
         </button>
-
         <ApplicationDialog
           isLoading={isLoading}
           isOpen={isOpen}
@@ -90,7 +91,6 @@ const Gallery = ({ info }) => {
         />
         {/* <ToastContainer style={{ zIndex: 10000 }} /> */}
       </div>
-      <ShuffleGrid singapore={singapore} />
     </section>
   );
 };
@@ -129,13 +129,13 @@ const generateSquares = (squareData) => {
 
 let images = [];
 
-const ShuffleGrid = ({ singapore }) => {
+const ShuffleGrid = ({ tour }) => {
   const timeoutRef = useRef(null);
   const [squares, setSquares] = useState([]);
 
   useEffect(() => {
-    if (singapore && singapore.images.length) {
-      images = singapore.images.map((item, index) => {
+    if (tour && tour.images.length) {
+      images = tour.images.map((item, index) => {
         return {
           id: index + 1,
           src: item,
@@ -144,7 +144,7 @@ const ShuffleGrid = ({ singapore }) => {
       shuffleSquares();
     }
     return () => clearTimeout(timeoutRef.current);
-  }, [singapore]);
+  }, [tour]);
 
   const shuffleSquares = () => {
     setSquares(generateSquares(images));
@@ -152,10 +152,10 @@ const ShuffleGrid = ({ singapore }) => {
   };
 
   const getClassName = () => {
-    if (singapore.images.length < 5) {
+    if (tour.images.length < 5) {
       return "grid-cols-2 grid-rows-2";
     }
-    if (singapore.images.length < 10) {
+    if (tour.images.length < 10) {
       return "grid-cols-3 grid-rows-3";
     }
     return "grid-cols-4 grid-rows-4";

@@ -74,7 +74,7 @@ export default function VideoList() {
 
     if (isOpen === false && initialTime !== "") {
       if (originProgress !== 100) {
-        fetch("https://api.luminouscn.com/course/progress/", {
+        fetch("https://api.luminoussg.com/course/progress/", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -105,7 +105,7 @@ export default function VideoList() {
     setIsLoading(true);
     try {
       const res = await fetch(
-        `https://api.luminouscn.com/course/?page=${page}&page_size=12&name=${courseName}&progress=${progress}`,
+        `https://api.luminoussg.com/course/?page=${page}&page_size=12&name=${courseName}&progress=${progress}`,
         {
           method: "GET", // *GET, POST, PUT, DELETE, etc.
 

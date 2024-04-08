@@ -7,7 +7,7 @@ import LayoutEffect from "@/components/LayoutEffect";
 
 const Testimonial = ({ info }) => {
   const { theme } = useTheme();
-  const schoolList = info && info.lowSchool ? info.lowSchool : [];
+  const schoolList = info && info.highSchool ? info.highSchool : [];
   // const testimonials = [
   //     {
   //         avatar: user1,
@@ -32,12 +32,12 @@ const Testimonial = ({ info }) => {
               theme === "dark" ? "text-gray-50" : "text-gray-800"
             }`}
           >
-            低龄留学热门学校
+            高等教育热门学校
           </h2>
         </div>
         <GradientWrapper
           wrapperClassName="max-w-sm h-40 top-12 inset-x-0"
-          className="mt-12"
+          className="mt-20"
         >
           <LayoutEffect
             className="duration-1000 delay-300"

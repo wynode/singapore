@@ -1,4 +1,6 @@
 import Singapore from "@/components/ui/Singapore";
+import LowSchool from "@/components/ui/LowSchool";
+import HighSchool from "@/components/ui/HighSchool";
 import { useEffect, useState } from "react";
 import { useTheme } from "@/contexts/ThemeContext";
 
@@ -35,7 +37,7 @@ export default function Home() {
     ],
   });
   useEffect(() => {
-    fetch("https://api.luminouscn.com/official_website/1/").then((res) => {
+    fetch("https://api.luminoussg.com/official_website/1/").then((res) => {
       res.json().then((json) => {
         setInfo(json.extra_info);
         localStorage.setItem("extraInfo", JSON.stringify(json.extra_info));
@@ -45,6 +47,8 @@ export default function Home() {
   return (
     <div className={theme === "dark" ? "bg-gray-900" : "bg-white"}>
       <Singapore info={info}></Singapore>
+      <LowSchool info={info}></LowSchool>
+      <HighSchool info={info}></HighSchool>
     </div>
   );
 }

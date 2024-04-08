@@ -23,7 +23,7 @@ export default function Login() {
   };
   const handleSubmitLogin = () => {
     setIsLoading(true);
-    fetch("https://api.luminouscn.com/register/", {
+    fetch("https://api.luminoussg.com/register/", {
       method: "POST",
 
       headers: {

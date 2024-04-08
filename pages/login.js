@@ -28,7 +28,7 @@ export default function Login() {
   const handleSubmitLogin = async () => {
     setIsLoading(true);
     try {
-      const res = await fetch("https://api.luminouscn.com/api/token/", {
+      const res = await fetch("https://api.luminoussg.com/api/token/", {
         method: "POST", // *GET, POST, PUT, DELETE, etc.
 
         headers: {
@@ -49,7 +49,7 @@ export default function Login() {
         //   toast.success("登录成功");
         // }
         localStorage.setItem("access", json.access);
-        const user = await fetch("https://api.luminouscn.com/student/self/", {
+        const user = await fetch("https://api.luminoussg.com/student/self/", {
           method: "GET", // *GET, POST, PUT, DELETE, etc.
           headers: {
             "Content-Type": "application/json",

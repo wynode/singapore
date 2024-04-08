@@ -40,9 +40,10 @@ const Navbar = ({ isCourse }) => {
   const [name, setName] = useState("");
 
   const [navigation, setNavigation] = useState([
-    { name: "留学申请", href: "/application" },
-    { name: "新加坡服务", href: "/singapore" },
-    { name: "游学服务", href: "/studytour" },
+    { name: "留学申请及服务", href: "/singapore" },
+    // { name: "新加坡服务", href: "/singapore" },
+    { name: "游学研学服务", href: "/studytour" },
+    { name: "学历及背景提升", href: "/promote" },
     { name: "公司简介", href: "/faqs" },
     { name: "课程学习", href: "/course" },
   ]);

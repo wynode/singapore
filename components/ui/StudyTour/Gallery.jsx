@@ -14,7 +14,7 @@ const Gallery = ({ info }) => {
   const { theme } = useTheme();
   const handleSubmit = (formData) => {
     setIsLoading(true);
-    fetch("https://api.luminouscn.com/study_abroad_application/", {
+    fetch("https://api.luminoussg.com/study_abroad_application/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
